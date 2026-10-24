@@ -2,7 +2,7 @@
 
 A self-hosted home-lab service running on a repurposed laptop. It blocks ads, trackers and malicious domains for every enrolled device, and gives those devices private access to the home server from any network.
 
-![Project overview](docs/images/00-overview.png)
+
 <!-- Add a hero screenshot, for example the Pi-hole dashboard. -->
 
 ---
@@ -76,7 +76,6 @@ Run **Server** commands on the lab laptop (over SSH) and **PC** commands on your
 ssh <user>@<server-lan-ip>
 ```
 
-![Server first login](docs/images/01-ssh-login.png)
 
 ### 2. Install Pi-hole
 
@@ -96,8 +95,6 @@ dig @127.0.0.1 example.com        # a real address
 dig @127.0.0.1 doubleclick.net    # 0.0.0.0 (blocked)
 ```
 
-![Pi-hole dashboard](docs/images/02-pihole-dashboard.png)
-![dig output showing a blocked domain](docs/images/03-dig-blocked.png)
 
 ### 3. Install Tailscale
 
@@ -119,16 +116,11 @@ Let Pi-hole answer Tailscale clients:
 sudo pihole-FTL --config dns.listeningMode all
 ```
 
-![Tailscale DNS settings](docs/images/04-tailscale-dns.png)
-![Tailscale machines list](docs/images/05-tailscale-machines.png)
-
 ### 4. Enroll devices
 
 1. Install the Tailscale app on each device and sign in to the same account.
 2. Android: set **Private DNS** to Off or Automatic. In Chrome, turn off **Use secure DNS**.
 3. Windows: tick **Use Tailscale DNS settings** in Preferences, and turn off secure DNS in the browser.
-
-![Phone connected to the tailnet](docs/images/06-phone-tailscale.png)
 
 ### 5. Enable the exit node (optional full tunnel)
 
@@ -140,8 +132,6 @@ sudo tailscale set --advertise-exit-node
 ```
 
 In the admin console, open the server's **Edit route settings** and tick **Use as exit node**. Then on each device choose **Exit node → server** for full tunnel, or **None** for split tunnel.
-
-![Exit node setting](docs/images/07-exit-node.png)
 
 ### 6. Keep it running 24/7
 
@@ -193,12 +183,8 @@ sudo systemctl enable wg-quick@wg0
 | Exit node switches full tunnel on and off | Passed |
 | Server keeps running with the lid closed | Passed |
 | Services return after a cold boot | Passed |
-| Latency (`tailscale ping`) | `<ms>` ms, `<direct / relayed>` |
+| Latency (`tailscale ping`) | `244` ms, `direct` |
 
-![Query Log with a blocked phone request](docs/images/08-query-log.png)
-![Blocked site on the phone](docs/images/09-phone-blocked.png)
-![Exit node IP check](docs/images/10-exit-node-ip.png)
-![Latency test](docs/images/11-tailscale-ping.png)
 
 ### Packet capture
 
@@ -212,11 +198,9 @@ sudo timeout 90 tcpdump -Z $USER -i <interface> -n 'not port 22 and not arp' -w 
 
 | Capture | What it shows |
 |---|---|
-| Inside the tunnel | `<readable DNS lookups>` |
-| On the network interface | `<encrypted tunnel packets>` |
+| Inside the tunnel | `readable DNS lookups` |
+| On the network interface | `encrypted tunnel packets` |
 
-![Capture inside the tunnel](docs/images/12-capture-inside.png)
-![Capture on the wire](docs/images/13-capture-outside.png)
 
 ---
 

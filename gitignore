@@ -1,0 +1,29 @@
+# Secrets and keys
+*.key
+*.pem
+*.conf
+wg0.conf
+.env
+*token*
+*secret*
+
+# Router, DDNS and netplan files can contain passwords
+duck.sh
+duck.log
+*.yaml
+*.yml
+!.github/**/*.yml
+
+# Raw captures contain browsing activity
+*.pcap
+*.pcapng
+*.cap
+
+# Unsanitized screenshots and exports (put cleaned images in docs/evidence/)
+screenshots-raw/
+*.har
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
